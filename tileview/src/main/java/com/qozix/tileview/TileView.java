@@ -472,6 +472,21 @@ public class TileView extends ZoomPanLayout implements
   }
 
   /**
+   * Scrolls and scales (with animation) the TileView to the specified x, y and scale provided.
+   *
+   * @param x     The relative x position to move to.
+   * @param y     The relative y position to move to.
+   * @param scale The scale the TileView should be at when the animation is complete.
+   */
+  public void slideToWithScale( double x, double y, float scale ) {
+    slideToWithScale(
+      mCoordinateTranslater.translateAndScaleX( x, scale ),
+      mCoordinateTranslater.translateAndScaleY( y, scale ),
+      scale
+    );
+  }
+
+  /**
    * Markers added to this TileView will have anchor logic applied on the values provided here.
    * E.g., setMarkerAnchorPoints(-0.5f, -1.0f) will have markers centered horizontally, and aligned
    * along the bottom edge to the y value supplied.

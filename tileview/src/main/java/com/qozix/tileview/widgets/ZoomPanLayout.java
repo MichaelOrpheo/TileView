@@ -433,6 +433,18 @@ public class ZoomPanLayout extends ViewGroup implements
   }
 
   /**
+   * Animates the ZoomPanLayout to the scale provided, and scroll the viewport to the position
+   * supplied.
+   *
+   * @param x Horizontal destination point.
+   * @param y Vertical destination point.
+   * @param scale The final scale value the ZoomPanLayout should animate to.
+   */
+  public void slideToWithScale( int x, int y, float scale ) {
+    getAnimator().animateZoomPan( x, y, scale );
+  }
+
+  /**
    * Scales the ZoomPanLayout with animated progress, without maintaining scroll position.
    *
    * @param destination The final scale value the ZoomPanLayout should animate to.
