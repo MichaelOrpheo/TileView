@@ -486,6 +486,22 @@ public class TileView extends ZoomPanLayout implements
     );
   }
 
+  public void slideToAndCenterHorizontalWithScale( double x, double y, float scale ) {
+    slideToAndCenterHorizontalWithScale(
+            mCoordinateTranslater.translateAndScaleX( x, scale ),
+            mCoordinateTranslater.translateAndScaleY( y, scale ),
+            scale
+    );
+  }
+
+  public void slideToAndCenterVerticalWithScale( double x, double y, float scale ) {
+    slideToAndCenterVerticalWithScale(
+            mCoordinateTranslater.translateAndScaleX( x, scale ),
+            mCoordinateTranslater.translateAndScaleY( y, scale ),
+            scale
+    );
+  }
+
   /**
    * Markers added to this TileView will have anchor logic applied on the values provided here.
    * E.g., setMarkerAnchorPoints(-0.5f, -1.0f) will have markers centered horizontally, and aligned

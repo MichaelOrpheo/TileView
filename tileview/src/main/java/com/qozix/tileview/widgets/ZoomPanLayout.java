@@ -432,6 +432,14 @@ public class ZoomPanLayout extends ViewGroup implements
     getAnimator().animateZoomPan( x - getHalfWidth(), y - getHalfHeight(), scale );
   }
 
+  public void slideToAndCenterHorizontalWithScale( int x, int y, float scale ) {
+    getAnimator().animateZoomPan( x - getHalfWidth(), y, scale );
+  }
+
+  public void slideToAndCenterVerticalWithScale( int x, int y, float scale ) {
+    getAnimator().animateZoomPan( x, y - getHalfHeight(), scale );
+  }
+
   /**
    * Animates the ZoomPanLayout to the scale provided, and scroll the viewport to the position
    * supplied.
