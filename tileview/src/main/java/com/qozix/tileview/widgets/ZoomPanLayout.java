@@ -433,12 +433,10 @@ public class ZoomPanLayout extends ViewGroup implements
   }
 
   public void slideToAndCenterHorizontalWithScale( int x, int y, float scale ) {
-    scale = getConstrainedDestinationScale(scale);
     getAnimator().animateZoomPan( x - getHalfWidth(), y, scale );
   }
 
   public void slideToAndCenterVerticalWithScale( int x, int y, float scale ) {
-    scale = getConstrainedDestinationScale(scale);
     getAnimator().animateZoomPan( x, y - getHalfHeight(), scale );
   }
 
@@ -451,7 +449,6 @@ public class ZoomPanLayout extends ViewGroup implements
    * @param scale The final scale value the ZoomPanLayout should animate to.
    */
   public void slideToWithScale( int x, int y, float scale ) {
-    scale = getConstrainedDestinationScale(scale);
     getAnimator().animateZoomPan( x, y, scale );
   }
 
@@ -498,7 +495,7 @@ public class ZoomPanLayout extends ViewGroup implements
     // noop
   }
 
-  private float getConstrainedDestinationScale( float scale ) {
+  protected float getConstrainedDestinationScale( float scale ) {
     scale = Math.max( scale, mEffectiveMinScale );
     scale = Math.min( scale, mMaxScale );
     return scale;

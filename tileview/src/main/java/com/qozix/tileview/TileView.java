@@ -479,6 +479,8 @@ public class TileView extends ZoomPanLayout implements
    * @param scale The scale the TileView should be at when the animation is complete.
    */
   public void slideToWithScale( double x, double y, float scale ) {
+    scale = getConstrainedDestinationScale(scale);
+
     slideToWithScale(
       mCoordinateTranslater.translateAndScaleX( x, scale ),
       mCoordinateTranslater.translateAndScaleY( y, scale ),
@@ -487,6 +489,8 @@ public class TileView extends ZoomPanLayout implements
   }
 
   public void slideToAndCenterHorizontalWithScale( double x, double y, float scale ) {
+    scale = getConstrainedDestinationScale(scale);
+
     slideToAndCenterHorizontalWithScale(
             mCoordinateTranslater.translateAndScaleX( x, scale ),
             mCoordinateTranslater.translateAndScaleY( y, scale ),
@@ -495,6 +499,8 @@ public class TileView extends ZoomPanLayout implements
   }
 
   public void slideToAndCenterVerticalWithScale( double x, double y, float scale ) {
+    scale = getConstrainedDestinationScale(scale);
+
     slideToAndCenterVerticalWithScale(
             mCoordinateTranslater.translateAndScaleX( x, scale ),
             mCoordinateTranslater.translateAndScaleY( y, scale ),
