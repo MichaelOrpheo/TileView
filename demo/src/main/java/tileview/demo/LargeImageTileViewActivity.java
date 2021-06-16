@@ -3,6 +3,7 @@ package tileview.demo;
 import android.os.Bundle;
 
 import com.qozix.tileview.TileView;
+import com.qozix.tileview.widgets.ZoomPanLayout;
 
 public class LargeImageTileViewActivity extends TileViewActivity {
 
@@ -40,5 +41,7 @@ public class LargeImageTileViewActivity extends TileViewActivity {
 
 		// disallow going back to minimum scale while double-taping at maximum scale (for demo purpose)
 		tileView.setShouldLoopScale( false );
+
+		tileView.setMinimumScaleMode(ZoomPanLayout.MinimumScaleMode.FIT_TOP);
 	}
 }

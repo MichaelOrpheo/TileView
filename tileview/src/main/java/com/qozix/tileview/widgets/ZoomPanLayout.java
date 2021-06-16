@@ -126,7 +126,7 @@ public class ZoomPanLayout extends ViewGroup implements
     final int height = getHeight();
 
     mOffsetX = mScaledWidth >= width ? 0 : width / 2 - mScaledWidth / 2;
-    mOffsetY = mScaledHeight >= height ? 0 : height / 2 - mScaledHeight / 2;
+    mOffsetY = (mMinimumScaleMode == MinimumScaleMode.FIT_TOP || mScaledHeight >= height) ? 0 : height / 2 - mScaledHeight / 2;
 
     for( int i = 0; i < getChildCount(); i++ ) {
       View child = getChildAt( i );
@@ -170,7 +170,8 @@ public class ZoomPanLayout extends ViewGroup implements
 
   /**
    * Set minimum and maximum mScale values for this ZoomPanLayout.
-   * Note that if minimumScaleMode is set to {@link MinimumScaleMode#FIT} or {@link MinimumScaleMode#FILL}, the minimum value set here will be ignored
+   * Note that if minimumScaleMode is set to {@link MinimumScaleMode#FIT_CENTER}, {@link MinimumScaleMode#FIT_TOP} or {@link MinimumScaleMode#FILL},
+   * the minimum value set here will be ignored
    * Default values are 0 and 1.
    *
    * @param min Minimum scale the ZoomPanLayout should accept.
@@ -587,8 +588,12 @@ public class ZoomPanLayout extends ViewGroup implements
 
   private float calculatedMinScale( float minimumScaleX, float minimumScaleY ) {
     switch( mMinimumScaleMode ) {
-      case FILL: return Math.max( minimumScaleX, minimumScaleY );
-      case FIT: return Math.min( minimumScaleX, minimumScaleY );
+      case FILL:
+        return Math.max( minimumScaleX, minimumScaleY );
+
+      case FIT_CENTER:
+      case FIT_TOP:
+        return Math.min( minimumScaleX, minimumScaleY );
     }
 
     return mMinScale;
@@ -604,7 +609,7 @@ public class ZoomPanLayout extends ViewGroup implements
 
   /**
    * When the scale is less than {@code mMinimumScaleX}, either because we are using
-   * {@link MinimumScaleMode#FIT} or {@link MinimumScaleMode#NONE}, the scroll position takes a
+   * {@link MinimumScaleMode#FIT_CENTER}, {@link MinimumScaleMode#FIT_TOP} or {@link MinimumScaleMode#NONE}, the scroll position takes a
    * value between its starting value and 0. A linear interpolation between the
    * {@code mMinimumScaleX} and the {@code mEffectiveMinScale} is used. <p>
    * This strategy is used to avoid that a custom return value of {@link #getScrollMinX} (which
@@ -1038,10 +1043,16 @@ public class ZoomPanLayout extends ViewGroup implements
     FILL,
 
     /**
-     * Limit the minimum scale to no less than what
-     * would be required to fit inside the container
+     * Limit the minimum scale to no less than what would
+     * be required to fit inside the container at center
      */
-    FIT,
+    FIT_CENTER,
+
+    /**
+     * Limit the minimum scale to no less than what would
+     * be required to fit inside the container at top
+     */
+    FIT_TOP,
 
     /**
      * Allow arbitrary minimum scale.
