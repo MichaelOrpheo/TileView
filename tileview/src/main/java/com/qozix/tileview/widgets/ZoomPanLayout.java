@@ -3,6 +3,7 @@ package com.qozix.tileview.widgets;
 import android.animation.Animator;
 import android.animation.ValueAnimator;
 import android.content.Context;
+import android.graphics.Rect;
 import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
 import android.view.GestureDetector;
@@ -49,6 +50,7 @@ public class ZoomPanLayout extends ViewGroup implements
 
   private int mOffsetX;
   private int mOffsetY;
+  private Rect mCenterRect;
 
   private float mEffectiveMinScale = 0;
   private float mMinimumScaleX;
@@ -125,8 +127,11 @@ public class ZoomPanLayout extends ViewGroup implements
     final int width = getWidth();
     final int height = getHeight();
 
-    mOffsetX = mScaledWidth >= width ? 0 : width / 2 - mScaledWidth / 2;
-    mOffsetY = (mMinimumScaleMode == MinimumScaleMode.FIT_TOP || mScaledHeight >= height) ? 0 : height / 2 - mScaledHeight / 2;
+    if (mCenterRect == null)
+      mCenterRect = new Rect(0, 0, width, height);
+
+    mOffsetX = mScaledWidth >= mCenterRect.width() ? 0 : mCenterRect.width() / 2 - mScaledWidth / 2;
+    mOffsetY = (mMinimumScaleMode == MinimumScaleMode.FIT_TOP || mScaledHeight >= mCenterRect.height()) ? 0 : mCenterRect.height() / 2 - mScaledHeight / 2;
 
     for( int i = 0; i < getChildCount(); i++ ) {
       View child = getChildAt( i );
@@ -289,6 +294,14 @@ public class ZoomPanLayout extends ViewGroup implements
    */
   public int getOffsetY() {
     return mOffsetY;
+  }
+
+  public Rect getCenterRect() {
+    return mCenterRect;
+  }
+
+  public void setCenterRect(Rect centerRect) {
+    mCenterRect = centerRect;
   }
 
   /**
